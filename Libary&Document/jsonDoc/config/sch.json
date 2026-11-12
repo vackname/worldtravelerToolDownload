@@ -1,0 +1,14 @@
+{
+    "title":"worldTraveler",
+    "page":{
+        "index":"首页"
+    },
+    "error":
+    {
+        "svbusy":"伺服器忙录中"
+    },
+    "input":
+    {
+        "return":"返回"
+    }
+}

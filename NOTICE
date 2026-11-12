@@ -1,0 +1,12 @@
+worldTraveler
+Copyright 2026 Chung, Chi-Wen (Taiwan)
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+It is free for anyone in the world to use, modify and redistribute under that license.
+
+The name "worldTraveler" and the worldTraveler logo (the 8-bit red-hat Earth
+icon, including media/icon.png and the website favicon) are trademarks of
+Chung, Chi-Wen and are NOT licensed under the Apache License (see Section 6 of
+the license and TRADEMARKS.md).
+
+Third-party components keep their own licenses (e.g. Vue.js, pako, TypeScript).

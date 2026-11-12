@@ -1,0 +1,14 @@
+{
+    "title":"worldTraveler",
+    "page":{
+        "index":"Home"
+    },
+    "error":
+    {
+        "svbusy":"server busy!"
+    },
+    "input":
+    {
+        "return":"Return"
+    }
+}

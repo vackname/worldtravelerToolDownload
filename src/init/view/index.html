@@ -1,0 +1,148 @@
+﻿<div id="init_panel" class="st-page hack_iphoneFullScreen" v-show="mLoad">
+    <!-- 導覽列：temp/index/head -->
+    <component v-bind:is="getVue(this,'headTemp')"></component>
+
+    <!-- 主視覺：左文字、右作者動畫 (temp/index/AuthorAnimate + animateModel/author.ts) -->
+    <section id="st_hero" class="st-hero">
+        <div class="st-wrap st-hero-grid">
+            <div class="st-hero-copy">
+                <span class="st-badge">{{text().hero.badge}}</span>
+                <h1>{{text().hero.title}}</h1>
+                <p class="st-lead">{{text().hero.lead}}</p>
+                <div class="st-actions">
+                    <button type="button" class="st-btn st-btn-main" v-on:click="go('st_demos')">{{text().hero.start}}</button>
+                    <button type="button" class="st-btn" v-on:click="go('st_quick')">{{text().hero.docs}}</button>
+                </div>
+            </div>
+            <figure class="st-hero-art">
+                <component v-bind:is="getVue(this,'AuthorATemp')"></component>
+                <figcaption>{{text().hero.hint}}</figcaption>
+            </figure>
+        </div>
+    </section>
+
+    <!-- 快速開始 -->
+    <section id="st_quick" class="st-section">
+        <div class="st-wrap">
+            <h2>{{text().quick.title}}</h2>
+            <ol class="st-steps">
+                <li v-for="(s,i) in text().quick.steps">
+                    <span class="st-step-no">{{i+1}}</span>
+                    <b>{{s.t}}</b>
+                    <p>{{s.d}}</p>
+                    <code>{{s.f}}</code>
+                </li>
+            </ol>
+        </div>
+    </section>
+
+    <!-- 簡單範例：每張卡片一個功能 (上：操作，下：最少寫法) -->
+    <section id="st_demos" class="st-section st-section-alt">
+        <div class="st-wrap">
+            <h2>{{text().demos.title}}</h2>
+            <p class="st-lead">{{text().demos.lead}}</p>
+            <div class="st-cards">
+                <article class="st-card" id="st_card_bind">
+                    <totemp content="bind">../temp/index/cardHead.html</totemp>
+                    <div class="st-demo">
+                        <input class="st-input" type="text" v-model="name" v-bind:placeholder="text().demos.items.bind.ph" />
+                        <p class="st-out">{{text().demos.items.bind.hello}}<b>{{name || text().demos.items.bind.guest}}</b></p>
+                    </div>
+                    <totemp content="bind">../temp/index/cardCode.html</totemp>
+                </article>
+                <article class="st-card" id="st_card_calc">
+                    <totemp content="calc">../temp/index/cardHead.html</totemp>
+                    <div class="st-demo st-row">
+                        <label>{{text().demos.items.calc.qty}} <input class="st-input st-num" type="number" min="1" max="9" v-model.number="qty" /></label>
+                        <label>{{text().demos.items.calc.price}} <input class="st-input st-num" type="number" step="100" v-model.number="price" /></label>
+                        <p class="st-out">{{text().demos.items.calc.total}} <b>{{ $f.money(total) }}</b></p>
+                    </div>
+                    <totemp content="calc">../temp/index/cardCode.html</totemp>
+                </article>
+                <article class="st-card" id="st_card_model">
+                    <totemp content="model">../temp/index/cardHead.html</totemp>
+                    <div class="st-demo st-row">
+                        <button type="button" class="st-btn st-btn-main" v-on:click="pickPlace()">{{text().demos.items.model.btn}}</button>
+                        <p class="st-out"><b>{{place || text().demos.items.model.empty}}</b></p>
+                    </div>
+                    <totemp content="model">../temp/index/cardCode.html</totemp>
+                </article>
+                <article class="st-card" id="st_card_cmd">
+                    <totemp content="cmd">../temp/index/cardHead.html</totemp>
+                    <div class="st-demo">
+                        <input class="st-input" type="text" v-model="cmdText" v-upm:cmdInput="cmdText" v-bind:placeholder="text().demos.items.cmd.ph" />
+                    </div>
+                    <totemp content="cmd">../temp/index/cardCode.html</totemp>
+                </article>
+                <article class="st-card" id="st_card_task">
+                    <totemp content="task">../temp/index/cardHead.html</totemp>
+                    <div class="st-demo">
+                        <button type="button" class="st-btn st-btn-main" v-on:click="runTask()">{{text().demos.items.task.btn}}</button>
+                        <ol class="st-progress">
+                            <li v-for="(s,i) in text().demos.items.task.steps" v-bind:class="{'is-done':taskStep>=i+1,'is-run':taskStep==i+0.5}">{{s}}</li>
+                        </ol>
+                        <p class="st-out" v-if="taskStep>=3"><b>✔ {{text().demos.items.task.done}}</b></p>
+                    </div>
+                    <totemp content="task">../temp/index/cardCode.html</totemp>
+                </article>
+                <article class="st-card" id="st_card_project">
+                    <totemp content="project">../temp/index/cardHead.html</totemp>
+                    <div class="st-demo">
+                        <button type="button" class="st-btn st-btn-main" v-if="!aaState" v-on:click="loadAa()">{{text().demos.items.project.btn}}</button>
+                        <p class="st-out" v-if="aaState=='loading'">{{text().demos.items.project.loading}}</p>
+                        <component v-bind:is="getVue(this,'aaTemp')"></component>
+                    </div>
+                    <totemp content="project">../temp/index/cardCode.html</totemp>
+                </article>
+                <article class="st-card" id="st_card_url">
+                    <totemp content="url">../temp/index/cardHead.html</totemp>
+                    <div class="st-demo st-row">
+                        <button type="button" class="st-btn st-btn-main" v-on:click="saveToUrl()">{{text().demos.items.url.btn}}</button>
+                        <p class="st-out">{{urlFrom ? text().demos.items.url.got : text().demos.items.url.none}}<b>{{urlFrom}}</b></p>
+                    </div>
+                    <totemp content="url">../temp/index/cardCode.html</totemp>
+                </article>
+                <article class="st-card" id="st_card_assets">
+                    <totemp content="assets">../temp/index/cardHead.html</totemp>
+                    <div class="st-demo st-row">
+                        <img class="st-thumb" v-loadimg="importLoad.pub.libSrc('takephoto.png')" alt="" />
+                        <p class="st-out">{{text().demos.items.assets.site}}<b>{{importLoad.pub.config.get("title")}}</b></p>
+                    </div>
+                    <totemp content="assets">../temp/index/cardCode.html</totemp>
+                </article>
+                <article class="st-card" id="st_card_jwt">
+                    <totemp content="jwt">../temp/index/cardHead.html</totemp>
+                    <div class="st-demo">
+                        <button type="button" class="st-btn st-btn-main" v-on:click="makeJwt()">{{text().demos.items.jwt.btn}}</button>
+                        <p class="st-out st-mono" v-if="jwt">{{jwt}}</p>
+                    </div>
+                    <totemp content="jwt">../temp/index/cardCode.html</totemp>
+                </article>
+                <article class="st-card" id="st_card_htmlts">
+                    <totemp content="htmlts">../temp/index/cardHead.html</totemp>
+                    <div class="st-demo">
+                        <p class="st-out st-mono" v-if="tsInline">inline: {{tsInline}}<br/>src: {{tsSrc}}</p>
+                    </div>
+                    <totemp content="htmlts">../temp/index/cardCode.html</totemp>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- 頁尾：temp/index/foot -->
+    <component v-bind:is="getVue(this,'footTemp')"></component>
+</div>
+<!-- 樣板 TypeScript：與 view/index.ts 一起編譯 (型別檢查、import)；註冊這個樣板時 (Vue 建立之前) 執行一次
+     $view：vue = index.ts 的 export default；created / ready / leave 取得這個元件的 $t (data、action 都有型別) -->
+<script lang="ts">
+import {pb} from "../../models/vueSDK";
+// 可以寫 // 註解、型別、import (寫在最前面)
+const keys:string[] = Object.keys($view.vue.data || {});
+$view.created($t=>{
+    $t.tsInline = "data = " + keys.join(", ") + " · b64 = " + pb.UTF8ToBase64("worldTraveler");
+});
+</script>
+<!-- 程式較多時放外部檔：VS Code 有完整 TypeScript 提示 -->
+<script lang="ts" src="./index.script.ts"></script>
+<json map="tw.start" src="../temp/translation/tw/start.json"></json>
+<json map="en.start" src="../temp/translation/en/start.json"></json>

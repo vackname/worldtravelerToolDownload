@@ -1,0 +1,14 @@
+{
+    "title":"worldTraveler",
+    "page":{
+        "index":"ホームページに戻"
+    },
+    "error":
+    {
+        "svbusy":"伺服器忙錄"
+    },
+    "input":
+    {
+        "return":"戻る"
+    }
+}

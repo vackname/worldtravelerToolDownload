@@ -1,0 +1,123 @@
+{
+    "nav": {
+        "quick": "Quick start",
+        "demos": "Examples",
+        "docs": "Docs",
+        "switchTo": "中文"
+    },
+    "hero": {
+        "badge": "worldTraveler starter",
+        "title": "Build lazy-loaded websites with TypeScript × Vue",
+        "lead": "This page is the src/init example. Edit src/init/view/index.html and save; the browser updates in about a second.",
+        "start": "See examples",
+        "docs": "Read READ.en.md",
+        "hint": "Author animation (animateModel/author.ts): try clicking the book, violin, car or Digimon"
+    },
+    "quick": {
+        "title": "Start in three steps",
+        "steps": [
+            {
+                "t": "Edit a page",
+                "d": "Edit src/init/view/index.html; the browser reloads when you save.",
+                "f": "src/init/view/index.html"
+            },
+            {
+                "t": "Add a page",
+                "d": "Right-click src/<project>/view → \"New Frontend Page...\" and enter a name.",
+                "f": "VS Code right-click menu"
+            },
+            {
+                "t": "Go live",
+                "d": "Switch \"wT debug\" to release in the status bar; dir/ holds the files to deploy.",
+                "f": "dir/libjs"
+            }
+        ]
+    },
+    "demos": {
+        "title": "Simple examples",
+        "lead": "One feature per card: try it at the top, the minimal code is below.",
+        "items": {
+            "bind": {
+                "t": "Two-way binding",
+                "d": "v-model connects an input to data.",
+                "ph": "Type your name",
+                "hello": "Hello, ",
+                "guest": "traveler"
+            },
+            "calc": {
+                "t": "Computed & formatting",
+                "d": "funComputed in controllers works out the total; $f.money formats it.",
+                "qty": "People",
+                "price": "Price",
+                "total": "Total"
+            },
+            "model": {
+                "t": "Business logic model",
+                "d": "Logic lives in model/indexTsc and the view calls it as $m (downloaded on demand).",
+                "btn": "Pick a destination",
+                "empty": "Press the button"
+            },
+            "cmd": {
+                "t": "Custom directive",
+                "d": "addCommand in main.ts defines site-wide directives: v-upm flashes when the value changes.",
+                "ph": "Type something"
+            },
+            "task": {
+                "t": "Async flow with task",
+                "d": "StartNew → ContinueWith runs in order; each step waits for the previous one.",
+                "btn": "Run three steps",
+                "steps": [
+                    "Read settings",
+                    "Prepare data",
+                    "Render"
+                ],
+                "done": "All done"
+            },
+            "project": {
+                "t": "Lazy-loaded project",
+                "d": "The aa project is its own aa.min.js, downloaded when you press the button.",
+                "btn": "Load the aa project",
+                "loading": "Downloading…"
+            },
+            "url": {
+                "t": "URL parameters",
+                "d": "Keep state in the URL so a reload or a shared link restores it.",
+                "btn": "Write to URL and reload",
+                "got": "Read from the URL: ",
+                "none": "No parameter in the URL yet"
+            },
+            "assets": {
+                "t": "Images & text files",
+                "d": "Image library libSrc() and jsonDoc config.get(), bundled automatically.",
+                "site": "Site title (jsonDoc/config): "
+            },
+            "jwt": {
+                "t": "models package",
+                "d": "src/models/JWTCrypto is a site-wide package loaded on demand with $t.import.m.js.",
+                "btn": "Create a JWT"
+            },
+            "htmlts": {
+                "t": "Template TypeScript",
+                "d": "<script lang=\"ts\"> in index.html (and an external src file) is compiled with the view: type checking and imports work; $view gives you index.ts's export default and this component's $t (data, action)."
+            }
+        },
+        "code": {
+            "bind": "<input v-model=\"name\" />\n{{ name }}\n\n// view/index.ts\ndata:{ name:\"\" }",
+            "calc": "// controllers/index.ts\nfunComputed:($t)=>({\n    total:()=>$t.qty * $t.price\n})\n\n{{ $f.money(total) }}   // main.ts addFormat",
+            "model": "// model/indexTsc/main.ts\npick = ()=>places[Math.floor(Math.random() * places.length)];\n\n<button v-on:click=\"place = $m.pick()\">",
+            "cmd": "// main.ts\n.addCommand(\"upm\", dir=>dir.add(b=>b.update(...)))\n\n<input v-model=\"cmdText\" v-upm:cmdInput=\"cmdText\" />\n// v-指令:元素名稱 (名稱必填)",
+            "task": "task.Factory.StartNew(o=>{ ...; o.resolve(1); })\n.ContinueWith({ SuccessEvent:o=>{ ...; o.resolve(2); } })\n.ContinueWith({ SuccessEvent:o=>{ ...; o.resolve(3); } });",
+            "project": "$t.import.p.aa(insert=>\n    insert(\"aaTemp\", t=>t.exportVue({ main:$t.main })).toLoad());\n\n<component v-bind:is=\"getVue(this,'aaTemp')\"></component>",
+            "url": "urlHistory.on(\"homeDemo\", p=>{ $t.urlFrom = p.from; });\nurlHistory.push(\"homeDemo\", { from:\"button\" });\n// URL: #!homeDemo?from=button",
+            "assets": "<img v-loadimg=\"importLoad.pub.libSrc('takephoto.png')\" />\n{{ importLoad.pub.config.get(\"title\") }}\n// Libary&Document/libary/pub、jsonDoc/config",
+            "jwt": "$t.import.m.js.JWTCrypto<JWTCrypto>(e=>{\n    $t.jwt = e().CreateJWT(header, payload, \"key\");\n});",
+            "htmlts": "<script lang=\"ts\">\nimport {pb} from \"../../models/vueSDK\";\n// $view.vue = index.ts 的 export default\nconst keys = Object.keys($view.vue.data || {});\n$view.created($t=>{\n    $t.tsInline = \"data = \" + keys.join(\", \");\n});\n</script>\n<script lang=\"ts\" src=\"./index.script.ts\"></script>\n\n// index.script.ts\nexport default function($view:WtScriptView<typeof indexView>){\n    $view.ready($t=>{ $t.tsSrc = $t.text!().demos.items.htmlts.t; });\n}"
+        }
+    },
+    "foot": {
+        "name": "worldTraveler starter",
+        "edit": "This part is src/init/temp/index/foot.html",
+        "docs": "READ.en.md",
+        "rule": "AI rules AGENTS.en.md"
+    }
+}

@@ -1,0 +1,14 @@
+﻿<header id="st_head" class="st-head" v-bind:class="{'is-scrolled':scrolled}">
+    <div class="st-wrap st-head-in">
+        <a class="st-logo" href="#" v-on:click.prevent="go('st_hero')"><img v-bind:src="logo()" alt="" /><span>world<b>Traveler</b></span></a>
+        <nav class="st-nav">
+            <a href="#" v-on:click.prevent="go('st_quick')">{{nav().quick}}</a>
+            <a href="#" v-on:click.prevent="go('st_demos')">{{nav().demos}}</a>
+            <button type="button" class="st-lang" v-on:click="switchLang()">{{nav().switchTo}}</button>
+        </nav>
+    </div>
+</header>
+<json map="tw.start" src="../translation/tw/start.json"></json>
+<json map="en.start" src="../translation/en/start.json"></json>
+<!-- 離散資源調校：導覽列一定會顯示又很小，release 時直接嵌入 init.min.js，不另外下載 t*.txt (debug 不影響) -->
+<bundle>true</bundle>

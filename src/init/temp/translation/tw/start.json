@@ -1,0 +1,123 @@
+{
+    "nav": {
+        "quick": "快速開始",
+        "demos": "範例",
+        "docs": "開發說明",
+        "switchTo": "English"
+    },
+    "hero": {
+        "badge": "worldTraveler 初始包",
+        "title": "用 TypeScript × Vue 打造離散載入的網站",
+        "lead": "這個頁面就是 src/init 的範例。修改 src/init/view/index.html 並存檔，瀏覽器約 1 秒自動更新。",
+        "start": "看範例",
+        "docs": "開發說明 READ.md",
+        "hint": "作者動畫（animateModel/author.ts）：點書、小提琴、四驅車、數碼獸試試看"
+    },
+    "quick": {
+        "title": "三步開始",
+        "steps": [
+            {
+                "t": "改畫面",
+                "d": "編輯 src/init/view/index.html，存檔後瀏覽器自動重新載入。",
+                "f": "src/init/view/index.html"
+            },
+            {
+                "t": "加頁面",
+                "d": "在 src/<專案>/view 按右鍵 →「新增前端頁面...」，輸入名稱即可。",
+                "f": "VS Code 右鍵選單"
+            },
+            {
+                "t": "封裝上線",
+                "d": "狀態列「wT debug」切成 release，dir/ 就是要上線的檔案。",
+                "f": "dir/libjs"
+            }
+        ]
+    },
+    "demos": {
+        "title": "簡單範例",
+        "lead": "每張卡片示範一個功能：上方可以直接操作，下方是最少的寫法。",
+        "items": {
+            "bind": {
+                "t": "雙向綁定",
+                "d": "v-model 把輸入框和資料連在一起。",
+                "ph": "輸入你的名字",
+                "hello": "你好，",
+                "guest": "旅人"
+            },
+            "calc": {
+                "t": "計算與格式化",
+                "d": "controllers 的 funComputed 自動算總價，$f.money 負責格式。",
+                "qty": "人數",
+                "price": "單價",
+                "total": "總價"
+            },
+            "model": {
+                "t": "商業邏輯 model",
+                "d": "邏輯寫在 model/indexTsc，畫面用 $m 呼叫（用到才下載）。",
+                "btn": "抽一個目的地",
+                "empty": "按下按鈕試試"
+            },
+            "cmd": {
+                "t": "自訂指令",
+                "d": "main.ts 用 addCommand 定義全站指令：v-upm 在值改變時閃一下。",
+                "ph": "打字看看"
+            },
+            "task": {
+                "t": "非同步流程 task",
+                "d": "StartNew → ContinueWith 依序執行，每一步完成才往下。",
+                "btn": "執行三個步驟",
+                "steps": [
+                    "讀取設定",
+                    "整理資料",
+                    "完成畫面"
+                ],
+                "done": "全部完成"
+            },
+            "project": {
+                "t": "子專案離散載入",
+                "d": "aa 子專案是獨立的 aa.min.js，按下按鈕才下載。",
+                "btn": "載入 aa 子專案",
+                "loading": "下載中…"
+            },
+            "url": {
+                "t": "網址參數 urlHistory",
+                "d": "把狀態寫進網址，重新整理或分享連結都能還原。",
+                "btn": "寫入網址並重新整理",
+                "got": "從網址讀到：",
+                "none": "目前網址沒有參數"
+            },
+            "assets": {
+                "t": "圖片與文字檔",
+                "d": "圖片庫 libSrc()、jsonDoc 設定 config.get()，封裝時自動打包。",
+                "site": "網站標題（jsonDoc/config）："
+            },
+            "jwt": {
+                "t": "models 套件",
+                "d": "src/models/JWTCrypto 是全站套件，用 $t.import.m.js 在需要時才下載。",
+                "btn": "產生 JWT"
+            },
+            "htmlts": {
+                "t": "樣板 TypeScript",
+                "d": "index.html 裡的 <script lang=\"ts\">（與 src 外部檔）跟 view 一起編譯，有型別檢查、可以 import；用 $view 取得 index.ts 的 export default 與這個元件的 $t（data、action）。"
+            }
+        },
+        "code": {
+            "bind": "<input v-model=\"name\" />\n{{ name }}\n\n// view/index.ts\ndata:{ name:\"\" }",
+            "calc": "// controllers/index.ts\nfunComputed:($t)=>({\n    total:()=>$t.qty * $t.price\n})\n\n{{ $f.money(total) }}   // main.ts addFormat",
+            "model": "// model/indexTsc/main.ts\npick = ()=>places[Math.floor(Math.random() * places.length)];\n\n<button v-on:click=\"place = $m.pick()\">",
+            "cmd": "// main.ts\n.addCommand(\"upm\", dir=>dir.add(b=>b.update(...)))\n\n<input v-model=\"cmdText\" v-upm:cmdInput=\"cmdText\" />\n// v-指令:元素名稱 (名稱必填)",
+            "task": "task.Factory.StartNew(o=>{ ...; o.resolve(1); })\n.ContinueWith({ SuccessEvent:o=>{ ...; o.resolve(2); } })\n.ContinueWith({ SuccessEvent:o=>{ ...; o.resolve(3); } });",
+            "project": "$t.import.p.aa(insert=>\n    insert(\"aaTemp\", t=>t.exportVue({ main:$t.main })).toLoad());\n\n<component v-bind:is=\"getVue(this,'aaTemp')\"></component>",
+            "url": "urlHistory.on(\"homeDemo\", p=>{ $t.urlFrom = p.from; });\nurlHistory.push(\"homeDemo\", { from:\"button\" });\n// 網址：#!homeDemo?from=button",
+            "assets": "<img v-loadimg=\"importLoad.pub.libSrc('takephoto.png')\" />\n{{ importLoad.pub.config.get(\"title\") }}\n// Libary&Document/libary/pub、jsonDoc/config",
+            "jwt": "$t.import.m.js.JWTCrypto<JWTCrypto>(e=>{\n    $t.jwt = e().CreateJWT(header, payload, \"key\");\n});",
+            "htmlts": "<script lang=\"ts\">\nimport {pb} from \"../../models/vueSDK\";\n// $view.vue = index.ts 的 export default\nconst keys = Object.keys($view.vue.data || {});\n$view.created($t=>{\n    $t.tsInline = \"data = \" + keys.join(\", \");\n});\n</script>\n<script lang=\"ts\" src=\"./index.script.ts\"></script>\n\n// index.script.ts\nexport default function($view:WtScriptView<typeof indexView>){\n    $view.ready($t=>{ $t.tsSrc = $t.text!().demos.items.htmlts.t; });\n}"
+        }
+    },
+    "foot": {
+        "name": "worldTraveler 初始包",
+        "edit": "這段在 src/init/temp/index/foot.html",
+        "docs": "開發說明 READ.md",
+        "rule": "AI 協作規則 AGENTS.md"
+    }
+}

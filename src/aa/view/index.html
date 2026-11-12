@@ -1,0 +1,17 @@
+<style>
+    .aa-card { padding: 14px 16px; border: 1px dashed #14b8a6; border-radius: 12px; background: #f0fdfa; }
+    .aa-title { margin: 0 0 10px; color: #0f766e; font-weight: 600; }
+    .aa-row { display: flex; flex-wrap: wrap; gap: 10px; }
+    .aa-sub { margin: 10px 0 0; color: #0f766e; font-size: 14px; }
+</style>
+﻿<div class="aa-card">
+    <p class="aa-title">✔ {{tx().loaded}}</p>
+    <div class="aa-row">
+        <button type="button" class="st-btn" v-on:click="count++">{{tx().count}} {{count}}</button>
+        <button type="button" class="st-btn" v-if="!nextOn" v-on:click="openNext()">{{tx().next}}</button>
+    </div>
+    <!-- 下一層畫面 asyncLoadView (含 TS 模型 model/asyncM)：按下才載入 -->
+    <component v-bind:is="(v.indexOf('asynTemp')>-1 ? 'asynTemp' : '')"></component>
+</div>
+<json map="tw.aa">{ "loaded":"aa 子專案已載入（aa.min.js）", "count":"點擊次數", "next":"再載入下一層畫面" }</json>
+<json map="en.aa">{ "loaded":"The aa project is loaded (aa.min.js)", "count":"Clicks", "next":"Load the next view" }</json>

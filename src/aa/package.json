@@ -1,0 +1,19 @@
+[
+  {
+    "outputFileName": "/OpenWeb/wwwroot/libjs/aa.min",
+    "inputFiles": [
+      "/aa/view/asyncLoadView.ts",
+      "/aa/view/index.ts",
+      "/aa/view/asyncLoadView.html",
+      "/aa/view/index.html",
+      "/aa/controllers/asyncLoadView.ts",
+      "/aa/controllers/index.ts"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false,
+    "LastWriteInputFiles": []
+  }
+]

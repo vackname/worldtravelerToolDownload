@@ -1,0 +1,153 @@
+﻿#AA_panel{
+    width:100%;
+    #AAPanel{
+        /*作者 animate 圖片物件定位*/
+        position:relative;
+        margin-left:auto;
+        margin-right:auto;
+        width:100%;
+        min-width:200px;
+        max-width:380px;
+        aspect-ratio:1 / 1;/*圖片載入前先保留空間，避免版面跳動*/
+        border-radius:24px;
+        background-color:#1e293b;
+        box-shadow:0 24px 60px rgba(2, 6, 23, .45);
+        #meAn{/*main temp*/
+            position:relative;
+            width:100%;
+            overflow:hidden;
+            border-radius:24px;
+            #meAn_bk{   /*背景*/
+                position:relative;
+                top:0px;
+                width:100%;
+            }
+
+            #meAn_bk_wav{
+                /*背景 生命數*/
+                position:absolute;
+                top:0px;
+                left:0px;
+                width:100%;
+            }
+
+            #meAn_369{
+                /*背景 369字符*/
+                position:absolute;
+                top:0px;
+                left:0px;
+                width:100%;
+            }
+
+            #meAn_body
+            {
+                /*背景人物身體*/
+                position:absolute;
+                top:0px;
+                left:0px;
+                width:100%;  
+            }
+
+            #meAn_me{
+                /*背景臉*/
+                position:absolute;
+                top:0px;
+                left:0px;
+                width:100%;  
+            }
+
+            #meAn_dog_1{
+                /*狗狗 碰柑-臘長*/
+                position:absolute;
+                top:73%;
+                right:20%;
+                width:25%;
+            }
+
+            #meAn_dog_2{
+                /*狗狗 阿金-狐里*/
+                position:absolute;
+                top:40%;
+                right:1%;
+                width:25%;  
+            }
+
+            #meAn_dog_3{
+                /*狗狗 木柚-約克夏*/
+                position:absolute;
+                top:67%;
+                right:3%;
+                width:20%;  
+            }
+
+            #meAn_book
+            {
+                /*大查帳*/
+                cursor:pointer;
+                position:absolute;
+                top:65.1%;
+                left:5%;
+                width:30%;
+            }
+
+            #meAn_bookname
+            {
+                /*大查帳標籤：8-bit wt + 網站 icon (斜放，與原 psyl 圖相同角度)*/
+                position:absolute;
+                top:78%;
+                left:31%;
+                width:3%;
+                transform: rotate(-38deg);
+                image-rendering: pixelated;
+            }
+
+            #meAn_car
+            {
+                /*四驅車*/
+                cursor:pointer;
+                position:absolute;
+                top:86%;
+                left:25%;
+                width:20%;
+            }
+
+            #meAn_dgx_bk
+            {
+                /*數碼寶貝 傑斯獸-gx-背景*/
+                position:absolute;
+                top:79%;
+                left:39%;
+                width:17%;
+            }
+
+            #meAn_dgx
+            {
+                /*數碼寶貝 傑斯獸-gx*/
+                cursor:pointer;
+                position:absolute;
+                top:79.05%;
+                left:43.7%;
+                width:8%;
+            }
+
+            #meAn_mark
+            {
+                /*程式 三角涵數-斜率*/
+                position:absolute;
+                top:77%;
+                left:32%;
+                width:10%;
+            }
+
+            #meAn_vio
+            {
+                /*小提琴*/
+                cursor:pointer;
+                position:absolute;
+                top:94%;
+                left:46%;
+                width:10%;
+            }
+        }
+    }
+}

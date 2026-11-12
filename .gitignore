@@ -1,0 +1,12 @@
+.worldtraveler/
+.env
+dir/libjs/
+bin/
+obj/
+.vs/
+__pycache__/
+*.pyc
+.venv/
+node_modules/
+__debug_bin*
+.DS_Store

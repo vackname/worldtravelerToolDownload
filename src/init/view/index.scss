@@ -1,0 +1,134 @@
+// 初始包首頁 (init)：樣式前綴 st- (css 為全站共用，加前綴避免互相影響)
+$ink: #0f172a;        // 深色底 / 主要文字
+$ink2: #1e293b;
+$text: #334155;
+$muted: #64748b;
+$line: #e2e8f0;
+$bg: #f8fafc;
+$card: #ffffff;
+$brand: #ff8800;      // 品牌橘 (作者動畫主色)
+$brand-dark: #e67600;
+$accent: #14b8a6;
+$radius: 14px;
+$font: system-ui, -apple-system, "Segoe UI", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+$mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+@mixin device-full-screen {
+    // iPhone 瀏海：<meta name="viewport" ... viewport-fit=cover>
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+    padding-bottom: env(safe-area-inset-bottom);
+}
+@mixin mobile { @media (max-width: 760px) { @content; } }
+
+html { scroll-behavior: smooth; }
+body { margin: 0; background: $bg; }
+
+.st-page {
+    font-family: $font; color: $text; line-height: 1.6; background: $bg;
+    &.hack_iphoneFullScreen { @supports (padding: max(0px)) { @include device-full-screen; } }
+    h1, h2, h3 { color: $ink; margin: 0; line-height: 1.25; }
+    code, pre { font-family: $mono; }
+}
+.st-wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; box-sizing: border-box; @include mobile { padding: 0 16px; } }
+
+// ---------- 導覽列 (temp/index/head) ----------
+.st-head {
+    position: sticky; top: 0; z-index: 20; background: rgba(15, 23, 42, .92); backdrop-filter: blur(8px);
+    transition: box-shadow .2s;
+    &.is-scrolled { box-shadow: 0 6px 20px rgba(2, 6, 23, .25); }
+}
+.st-head-in { display: flex; align-items: center; justify-content: space-between; height: 60px; }
+.st-logo {
+    display: flex; align-items: center; gap: 10px; color: #fff; text-decoration: none; font-weight: 600; font-size: 18px; letter-spacing: .02em;
+    img { width: 28px; height: 28px; image-rendering: pixelated; }
+    b { color: $brand; font-weight: 600; }
+}
+.st-nav {
+    display: flex; align-items: center; gap: 22px;
+    a { color: #cbd5e1; text-decoration: none; font-size: 15px; &:hover { color: #fff; } }
+    @include mobile { gap: 14px; a { font-size: 14px; } }
+}
+.st-lang { border: 1px solid #475569; background: transparent; color: #e2e8f0; border-radius: 999px; padding: 4px 12px; font: inherit; font-size: 13px; cursor: pointer; &:hover { border-color: $brand; color: #fff; } }
+
+// ---------- 主視覺 ----------
+.st-hero { background: radial-gradient(1200px 500px at 85% -10%, #334155 0%, $ink 55%); color: #e2e8f0; padding: 72px 0 80px; @include mobile { padding: 40px 0 48px; } }
+.st-hero-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 56px; align-items: center; @include mobile { grid-template-columns: 1fr; gap: 36px; } }
+.st-hero-copy {
+    h1 { color: #fff; font-size: clamp(30px, 4.4vw, 48px); font-weight: 700; margin: 16px 0 18px; }
+    .st-lead { color: #cbd5e1; font-size: 18px; max-width: 560px; }
+}
+.st-badge { display: inline-block; padding: 4px 12px; border-radius: 999px; background: rgba(255, 136, 0, .15); color: #ffb35c; font-size: 13px; font-weight: 600; }
+.st-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.st-hero-art {
+    margin: 0; text-align: center;
+    figcaption { margin-top: 16px; color: #94a3b8; font-size: 13px; }
+}
+
+// ---------- 按鈕 / 輸入 ----------
+.st-btn {
+    display: inline-flex; align-items: center; justify-content: center; padding: 10px 18px; border-radius: 10px; border: 1px solid #94a3b8;
+    background: transparent; color: inherit; font: inherit; font-size: 15px; font-weight: 600; cursor: pointer; transition: background .15s, border-color .15s, transform .15s;
+    &:hover { transform: translateY(-1px); border-color: $brand; }
+    &.st-btn-main { background: $brand; border-color: $brand; color: #fff; &:hover { background: $brand-dark; } }
+}
+.st-section .st-btn:not(.st-btn-main) { color: $ink; }
+.st-input {
+    width: 100%; box-sizing: border-box; padding: 9px 12px; border: 1px solid $line; border-radius: 10px; font: inherit; color: $ink; background: #fff;
+    &:focus { outline: 2px solid rgba(255, 136, 0, .35); border-color: $brand; }
+    &.st-num { width: 110px; margin-left: 6px; }
+}
+
+// ---------- 區塊 ----------
+.st-section { padding: 72px 0; @include mobile { padding: 48px 0; } h2 { font-size: 28px; margin-bottom: 8px; } }
+.st-section-alt { background: #eef2f7; }
+.st-lead { color: $muted; margin: 0 0 28px; }
+
+// 快速開始
+.st-steps {
+    list-style: none; padding: 0; margin: 28px 0 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px;
+    @include mobile { grid-template-columns: 1fr; }
+    li { background: $card; border: 1px solid $line; border-radius: $radius; padding: 22px; }
+    b { display: block; color: $ink; font-size: 17px; margin: 10px 0 6px; }
+    p { margin: 0 0 12px; font-size: 15px; }
+    code { font-size: 12px; color: $muted; background: $bg; border: 1px solid $line; border-radius: 6px; padding: 2px 8px; word-break: break-all; }
+}
+.st-step-no { display: inline-flex; width: 30px; height: 30px; border-radius: 50%; background: $ink; color: #fff; align-items: center; justify-content: center; font-weight: 700; }
+
+// 範例卡片
+.st-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; @include mobile { grid-template-columns: 1fr; } }
+.st-card {
+    display: flex; flex-direction: column; background: $card; border: 1px solid $line; border-radius: $radius; overflow: hidden;
+    transition: box-shadow .2s, transform .2s;
+    &:hover { box-shadow: 0 12px 30px rgba(15, 23, 42, .08); transform: translateY(-2px); }
+}
+.st-card-head {
+    padding: 20px 20px 0;
+    h3 { font-size: 17px; }
+    p { margin: 6px 0 0; color: $muted; font-size: 14px; }
+}
+.st-demo {
+    padding: 16px 20px; flex: 1;
+    &.st-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
+    label { font-size: 14px; color: $muted; }
+}
+.st-out { margin: 10px 0 0; font-size: 15px; b { color: $ink; } .st-row & { margin: 0; } }
+.st-mono { font-family: $mono; font-size: 12px; word-break: break-all; background: $bg; border: 1px solid $line; border-radius: 8px; padding: 8px 10px; }
+.st-thumb { width: 48px; height: 48px; object-fit: contain; }
+.st-progress {
+    list-style: none; padding: 0; margin: 14px 0 0; display: flex; gap: 8px; flex-wrap: wrap;
+    li { padding: 4px 10px; border-radius: 999px; font-size: 13px; background: $bg; border: 1px solid $line; color: $muted; transition: background .2s; }
+    li.is-run { border-color: $brand; color: $brand-dark; }
+    li.is-done { background: rgba(20, 184, 166, .12); border-color: $accent; color: #0f766e; }
+}
+.st-code {
+    margin: 0; padding: 14px 20px; background: $ink; color: #e2e8f0; font-size: 12.5px; line-height: 1.6; white-space: pre-wrap; word-break: break-word;
+}
+
+// 子專案 aa 載入後的卡片 (aa/view/index.html)
+.st-demo .aa-box { margin-top: 4px; }
+
+// ---------- 頁尾 (temp/index/foot) ----------
+.st-foot { background: $ink; color: #94a3b8; padding: 28px 0; font-size: 14px; }
+.st-foot-in { display: flex; flex-wrap: wrap; gap: 8px 24px; align-items: center; b { color: #fff; } }
+.st-foot-docs { margin-left: auto; @include mobile { margin-left: 0; } }

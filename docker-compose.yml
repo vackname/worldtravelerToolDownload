@@ -1,0 +1,103 @@
+# worldTraveler 工作區 docker compose：前端 debug + nginx 閘道 + (選用) Redis + (選用) 後端 API
+#
+#   瀏覽器 ──▶ nginx :${WT_PORT} (單一來源，前端以相對路徑呼叫 API，沒有 CORS)
+#                ├─ /                  → web     前端網頁 (dir/) + worldTravelerVueMiddleWare.dll
+#                ├─ /wsBundleDebugLog  → web     存檔後自動重新載入的通知
+#                └─ /<API 名稱>/        → <API 名稱>.api   (nginx/routes/<API 名稱>.conf)
+#                                          ├ F5 debug 容器 (VS Code launch.json「Docker <語言>:<名稱>」)
+#                                          └ 或下方 api-* 服務 (不除錯時)
+#   bundle : wt fe debug，監看 src/ 重建 → 通知 web (.env 的 WT_FE_MODE：debug 增量重建 / release 正式封裝)
+#   redis  : Redis 7.4 (profile redis)，容器內主機名 redis:6379
+#
+# 常用指令 (於工作區根目錄；.env 由 wt init / install.sh 產生)
+#   docker compose up -d                       前端 debug (web + bundle + nginx)
+#   docker compose --profile redis up -d       加上 Redis (或在 .env 設 COMPOSE_PROFILES=redis)
+#   docker compose --profile api up -d --build 以容器執行全部後端 API (不除錯)
+#   docker compose port redis 6379             查 Redis 對應到本機的 port (隨機分配，避免衝突)
+#
+# 名稱：compose 專案名稱 ${WT_PROJECT} 含工作區 id (例：myshop-3f9a1c)，容器、網路、volume 都以它為前綴，不會與其他專案相撞。
+name: ${WT_PROJECT:-worldtraveler}
+
+services:
+  web:
+    image: ${WT_REGISTRY:-f01592000/}worldtravelervue-web:${WT_VERSION:-prod_2611120531}
+    hostname: get.web.com
+    environment:
+      WT_EMBED_WS: "1"
+      WorldTraveler__TscPassword: ${WT_TSC_PASSWORD:-}
+    volumes:
+      - ${WT_WORKSPACE:-.}/dir:/App/wwwroot
+    restart: unless-stopped
+    networks: [workspace]
+
+  bundle:
+    image: ${WT_REGISTRY:-f01592000/}worldtravelervue-command:${WT_VERSION:-prod_2611120531}
+    command: ["fe", "debug", "--root", "/workspace", "--notify", "http://web"]
+    user: "${WT_UID:-0}:${WT_GID:-0}"   # 以執行者身分寫檔 (install.sh 寫入 .env)
+    environment:
+      HOME: /tmp
+      DOTNET_CLI_HOME: /tmp
+      WT_PORT: ${WT_PORT:-9788}   # 瀏覽器 debug WebSocket 連線的 port (= nginx 對外 port)
+      WT_FE_MODE: ${WT_FE_MODE:-debug}   # debug = 增量重建 / release = 壓縮的正式封裝 (VS Code 狀態列「wT 模式」切換，或改 .env 後 docker compose up -d bundle)
+      WT_LANG: ${WT_LANG:-}   # wt 訊息語系：zh / en (install.sh 依系統語言寫入 .env；VS Code 擴充功能依介面語言覆寫)
+    volumes:
+      - ${WT_WORKSPACE:-.}:/workspace
+    depends_on: [web]
+    restart: unless-stopped
+    networks: [workspace]
+
+  nginx:
+    image: nginx:1.28-alpine
+    ports:
+      - "${WT_PORT:-9788}:80"
+    volumes:
+      - ${WT_WORKSPACE:-.}/nginx:/etc/nginx/conf.d:ro   # default.conf + routes/*.conf (新增 / 移除 API 時 wt 維護)
+    depends_on: [web]
+    restart: unless-stopped
+    networks: [workspace]
+
+  redis:
+    image: redis:7.4-alpine
+    profiles: ["redis"]
+    hostname: redis
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - "127.0.0.1::6379"   # 本機 port 隨機分配：docker compose port redis 6379
+    volumes:
+      - redis-data:/data
+    restart: unless-stopped
+    networks: [workspace]
+
+  # ==== 後端 API 服務 (wt new <語言> webapi 自動加入、wt remove 自動移除；docker compose --profile api up -d --build) ====
+  #
+  # 範本 (.NET webapi，名稱 OrderApi)：
+  #
+  # api-orderapi:
+  #   profiles: ["api"]                     # 預設不啟動；F5 debug 該專案時會先停止此服務，改由 debug 容器接手
+  #   build:
+  #     context: ./DotNetProject            # 含 ConfigForSystem 原始碼
+  #     dockerfile: OrderApi/Dockerfile.webapi
+  #   image: ${WT_PROJECT}-api-orderapi:compose
+  #   hostname: OrderApi.api                # 與 F5 debug 容器相同的主機名，nginx 一律轉送到這個名稱
+  #   environment:
+  #     ASPNETCORE_ENVIRONMENT: Development
+  #     WorldTraveler__TscPassword: ${WT_TSC_PASSWORD:-}
+  #   ports: ["5001:80"]                    # 與 launch.json debug 設定相同的 port
+  #   restart: unless-stopped
+  #   networks:
+  #     workspace:
+  #       aliases: [OrderApi.api]
+  #
+  # Python：context ./PythonProject/<名稱>、dockerfile Dockerfile.webapi
+  # Go    ：context ./goProject/<名稱>、dockerfile Dockerfile.release
+  #
+  # (wt 會把新服務插入在下一行之前)
+  # ==== /後端 API 服務 ====
+
+volumes:
+  redis-data:
+
+networks:
+  workspace:
+    name: ${WT_NETWORK:-worldtraveler_network}   # 與 .vscode/tasks.json 的 debug 容器 network 相同 (worldtraveler.json 的 network)
+    external: ${WT_NETWORK_EXTERNAL:-false}

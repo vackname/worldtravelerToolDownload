@@ -1,0 +1,14 @@
+{
+  "files.exclude": {
+    "**/bin": true,
+    "**/obj": true,
+    "dir/libjs": false
+  },
+  "search.exclude": {
+    "dir/libjs": true,
+    "**/node_modules": true
+  },
+  "files.encoding": "utf8",
+  "html.validate.scripts": false,
+  "worldTraveler.commandImage": "f01592000/worldtravelervue-command:prod_2611120531"
+}

@@ -1,0 +1,11 @@
+<footer id="st_foot" class="st-foot">
+    <div class="st-wrap st-foot-in">
+        <b>{{foot().name}}</b>
+        <span>{{foot().edit}}</span>
+        <span class="st-foot-docs">{{foot().docs}} · {{foot().rule}}</span>
+    </div>
+</footer>
+<json map="tw.start" src="../translation/tw/start.json"></json>
+<json map="en.start" src="../translation/en/start.json"></json>
+<!-- 離散資源調校：頁尾一定會顯示又很小，release 時直接嵌入 init.min.js，不另外下載 t*.txt (debug 不影響) -->
+<bundle>true</bundle>

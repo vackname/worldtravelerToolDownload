@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "incremental": true,
+    "noFallthroughCasesInSwitch": true,
+    "declaration": false,
+    "removeComments": false,
+    "strict": true,
+    "noImplicitAny": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "target": "es5",
+    "lib": [
+      "dom",
+      "es5",
+      "scripthost",
+      "es2015.promise"
+    ]
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "files": [
+    "main.ts"
+  ]
+}
