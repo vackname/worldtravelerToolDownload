@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # worldTraveler 開版初始包：一鍵安裝
 #
-# ★ 商業版：使用線上映像檔 f01592000/worldtravelervue-command:prod_2611120531、f01592000/worldtravelervue-web:prod_2611120531
-#   (寫入 .env 的 WT_REGISTRY=f01592000/、WT_VERSION=prod_2611120531；docker-compose.yml 依此選用。換版本：WT_VERSION=<版號> ./install.sh)
+# ★ 商業版：使用線上映像檔 f01592000/worldtravelervue-command:prod_2611170814、f01592000/worldtravelervue-web:prod_2611170814
+#   (寫入 .env 的 WT_REGISTRY=f01592000/、WT_VERSION=prod_2611170814；docker-compose.yml 依此選用。換版本：WT_VERSION=<版號> ./install.sh)
 #
 #   ./install.sh [--name <工作區名稱>] [--port <網頁 port>] [--redis] [--no-vscode] [--no-start]
 #     --port 未指定時：沿用 .env，否則自 9788 起找第一個未被使用的 port
@@ -41,7 +41,7 @@ USAGE
 WS="$(pwd)"
 
 NAME="$(basename "$WS")"; PORT=""; VSCODE=1; START=1; REDIS=0
-VER="${WT_VERSION:-prod_2611120531}"; REG="${WT_REGISTRY:-f01592000/}"
+VER="${WT_VERSION:-prod_2611170814}"; REG="${WT_REGISTRY:-f01592000/}"
 while [ $# -gt 0 ]; do
   case "$1" in
     --name) NAME="$2"; shift 2;;

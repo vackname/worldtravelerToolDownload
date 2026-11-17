@@ -73,6 +73,7 @@ nginx/                     閘道設定：default.conf、routes/<API 名稱>.con
 
 - **.NET**：
   - 用 `ProjectReference` 引用 `DotNetProject/ConfigForSystem`（JObj、JwtHelpers、DB migration、Redis、CacheMemoryService）。
+  - 資料庫讀寫用參數化的 `DBSql`（`cn.Insert` / `Update` / `Select<T>(where)` …）與預存程序 `cn.Proc(...)` / `cn.Deploy(DBProcDef)`，不要把值組進 SQL 字串；細節見各 .NET 專案的 `AGENTS.md`。
   - 前端注入元件是 dll：`DotNetProject/worldTravelerVueMiddleWare/worldTravelerVueMiddleWare.dll`（`wt new dotnet webapi` 自動複製，csproj 以 HintPath 引用）。webapi 的 `Startup` 呼叫 `services.AddWorldTravelerVue()` 與 `app.UseWorldTravelerVue(Configuration)`（同時載入金鑰 WorldTraveler:TscPassword）。
   - 新增或移除專案請用 `wt`，它會同步維護 `<工作區>.sln` 與 `.slnx`。
 - **Python**：Flask factory 寫在 `app.py`，路由放 `Models/routes.py`（Blueprint），設定放 `Config/config.json`，可用環境變數 `WT_<KEY>` 覆寫。

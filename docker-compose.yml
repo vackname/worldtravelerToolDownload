@@ -20,7 +20,7 @@ name: ${WT_PROJECT:-worldtraveler}
 
 services:
   web:
-    image: ${WT_REGISTRY:-f01592000/}worldtravelervue-web:${WT_VERSION:-prod_2611120531}
+    image: ${WT_REGISTRY:-f01592000/}worldtravelervue-web:${WT_VERSION:-prod_2611170814}
     hostname: get.web.com
     environment:
       WT_EMBED_WS: "1"
@@ -31,7 +31,7 @@ services:
     networks: [workspace]
 
   bundle:
-    image: ${WT_REGISTRY:-f01592000/}worldtravelervue-command:${WT_VERSION:-prod_2611120531}
+    image: ${WT_REGISTRY:-f01592000/}worldtravelervue-command:${WT_VERSION:-prod_2611170814}
     command: ["fe", "debug", "--root", "/workspace", "--notify", "http://web"]
     user: "${WT_UID:-0}:${WT_GID:-0}"   # 以執行者身分寫檔 (install.sh 寫入 .env)
     environment:

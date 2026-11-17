@@ -75,6 +75,7 @@ Projects in every language use the same structure:
 
 - **.NET**:
   - Reference `DotNetProject/ConfigForSystem` with `ProjectReference` (JObj, JwtHelpers, DB migration, Redis, CacheMemoryService).
+  - For database access use the parameterized `DBSql` (`cn.Insert` / `Update` / `Select<T>(where)` …) and stored procedures via `cn.Proc(...)` / `cn.Deploy(DBProcDef)`; never build SQL by concatenating values. Details are in each .NET project's `AGENTS.md`.
   - The frontend injection component is a dll: `DotNetProject/worldTravelerVueMiddleWare/worldTravelerVueMiddleWare.dll` (copied automatically by `wt new dotnet webapi`; the csproj references it via HintPath). A webapi's `Startup` calls `services.AddWorldTravelerVue()` and `app.UseWorldTravelerVue(Configuration)` (which also loads the key WorldTraveler:TscPassword).
   - Add or remove projects with `wt`, which keeps `<workspace>.sln` and `.slnx` in sync.
 - **Python**: the Flask factory is in `app.py`, routes go in `Models/routes.py` (Blueprint), settings in `Config/config.json`, overridable with `WT_<KEY>` environment variables.
